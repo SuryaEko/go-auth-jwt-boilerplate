@@ -30,7 +30,7 @@ go-auth-jwt-boilerplate/
 
 ### 1. Clone the repository
 ```sh
-git clone https://github.com/yourusername/go-auth-jwt-boilerplate.git
+git clone https://github.com/SuryaEko/go-auth-jwt-boilerplate.git
 cd go-auth-jwt-boilerplate
 ```
 
@@ -42,7 +42,8 @@ DB_USER=postgres
 DB_PASSWORD=yourpassword
 DB_NAME=yourdbname
 DB_PORT=5432
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRATION=24h
 ```
 
 ### 3. Install dependencies
