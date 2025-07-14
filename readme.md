@@ -3,27 +3,31 @@
 A clean and modular boilerplate for building RESTful APIs in Go using Gin, GORM, and JWT authentication.
 
 ## Features
-- User registration & login with JWT authentication
-- Password hashing (bcrypt)
+- User registration & login with JWT authentication (secure password hashing with bcrypt)
+- Role-based access (admin, user)
+- JWT token generation and validation
 - PostgreSQL/SQLite/MySQL support via GORM
-- Modular structure: models, services, controllers, routes, middleware
-- Environment variable support via `.env`
-- Ready for Dependency Injection (DI)
+- Modular and scalable folder structure (models, services, controllers, routes, middleware, utils)
+- Environment variable configuration via `.env`
+- Dependency Injection ready (service container)
+- Auto-migration for database tables
+- Example for profile update and password change
 
 ## Project Structure
 ```
 go-auth-jwt-boilerplate/
-├── main.go                # Entry point
+├── main.go                # Application entry point
 ├── go.mod / go.sum        # Go modules
-├── .env                   # Environment variables
+├── .env.example           # Environment variables (example)
 │
 ├── database/              # DB connection & auto migration
-├── models/                # GORM models
-├── services/              # Business logic (user, auth, etc)
-├── controllers/           # HTTP handlers
+├── models/                # GORM models (User, etc)
+├── dto/                   # Data Transfer Objects (input/output struct)
+├── services/              # Business logic (user, auth, profile, etc)
+├── controllers/           # HTTP handlers (register, login, profile, etc)
 ├── routes/                # Route registration
-├── middleware/            # JWT middleware
-├── utils/                 # Helper functions (JWT)
+├── middleware/            # JWT & custom middleware
+├── utils/                 # Helper functions (JWT, bcrypt, etc)
 ```
 
 ## Getting Started
@@ -35,7 +39,12 @@ cd go-auth-jwt-boilerplate
 ```
 
 ### 2. Setup environment variables
-Create a `.env` file in the project root:
+Copy `.env.example` to `.env` and fill in your configuration:
+```sh
+cp .env.example .env
+```
+
+Edit `.env` as needed:
 ```
 DB_HOST=localhost
 DB_USER=postgres
@@ -62,6 +71,12 @@ The app will run at `http://localhost:8080`
 - `POST /register` — Register a new user
 - `POST /login` — Login and get JWT
 - `GET /profile` — Get user profile (protected)
+- `PUT /profile` — Update user profile (protected)
+- `PUT /profile/password` — Change user password (protected)
+- `POST /users` — Create a new user (protected)
+- `GET /users/:id` — Get user by ID (protected)
+- `PUT /users/:id` — Update user by ID (protected)
+- `PUT /users/:id/password` — Update user password by ID (protected)
 
 ## Tools & Libraries
 - [Gin](https://github.com/gin-gonic/gin) — HTTP web framework
@@ -69,3 +84,6 @@ The app will run at `http://localhost:8080`
 - [JWT](https://github.com/golang-jwt/jwt) — JSON Web Token
 - [godotenv](https://github.com/joho/godotenv) — Load env file
 - [crypto/bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) — Password hashing
+
+## License
+MIT
