@@ -9,4 +9,5 @@ import (
 func RegisterAllRoutes(router *gin.Engine, controllerService *controllers.ControllerService) {
 	AuthRoutes(router, controllerService)
 	ProfileRoutes(router, controllerService)
+	UserRoutes(router, controllerService)
 }

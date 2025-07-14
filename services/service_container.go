@@ -5,15 +5,17 @@ import (
 )
 
 type ServiceContainer struct {
-	AuthService *AuthService
-	UserService *UserService
+	ProfileService *ProfileService
+	AuthService    *AuthService
+	UserService    *UserService
 	// Add other services here as needed
 }
 
 func InitServiceContainer(db *gorm.DB) *ServiceContainer {
 	return &ServiceContainer{
-		AuthService: &AuthService{DB: db},
-		UserService: &UserService{DB: db},
+		ProfileService: &ProfileService{DB: db},
+		AuthService:    &AuthService{DB: db},
+		UserService:    &UserService{DB: db},
 		// Initialize other services here
 	}
 }

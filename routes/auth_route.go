@@ -6,7 +6,7 @@ import (
 )
 
 // AuthRoutes sets up the authentication routes
-func AuthRoutes(router *gin.Engine, controllerService *controllers.ControllerService) {
-	router.POST("/register", controllerService.Register)
-	router.POST("/login", controllerService.Login)
+func AuthRoutes(router *gin.Engine, cs *controllers.ControllerService) {
+	router.POST("/register", cs.Register)
+	router.POST("/login", cs.Login)
 }

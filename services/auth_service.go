@@ -1,6 +1,7 @@
 package services
 
 import (
+	"github.com/SuryaEko/go-auth-jwt-boilerplate/dto"
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/models"
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/utils"
 
@@ -14,25 +15,32 @@ type AuthService struct {
 }
 
 // Register creates a new user in the database
-func (s *AuthService) Register(user *models.User, pass string) error {
-	// set role to "user" by default
-	user.Role = "user"
-
+func (s *AuthService) Register(input dto.RegisterInput) (*models.User, error) {
 	// Hash the password before saving
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	hashedPassword, err := utils.HashPassword(input.Password)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	user.Password = string(hashedPassword)
 
-	return s.DB.Create(user).Error
+	// Create a new user instance
+	user := models.User{
+		Username: input.Username,
+		Password: string(hashedPassword),
+		Role:     "user", // Default role is 'user'
+	}
+
+	if err := s.DB.Create(&user).Error; err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }
 
 // Login checks if the user exists and returns an error if not
-func (s *AuthService) Login(username string, password string) (*string, error) {
+func (s *AuthService) Login(input dto.LoginInput) (*string, error) {
 	var user models.User
 
-	result := s.DB.Where("username = ?", username).First(&user)
+	result := s.DB.Where("username = ?", input.Username).First(&user)
 
 	// If user not found, return an error
 	if result.Error != nil {
@@ -40,7 +48,7 @@ func (s *AuthService) Login(username string, password string) (*string, error) {
 	}
 
 	// check password using bcrypt
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
 		return nil, err
 	}
 
