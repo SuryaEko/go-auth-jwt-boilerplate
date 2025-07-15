@@ -6,29 +6,18 @@ import (
 
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/dto"
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/pkg"
-	"github.com/SuryaEko/go-auth-jwt-boilerplate/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func (s *ControllerService) ListUsers(c *gin.Context) {
-	// Create a Pagination object from query parameters
-	limit, err := utils.GetQueryIntGin(c, "limit", 10)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid limit parameter"})
-		return
-	}
-	page, err := utils.GetQueryIntGin(c, "page", 1)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid page parameter"})
+	var pagination pkg.Pagination
+	if err := c.ShouldBindQuery(&pagination); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid pagination parameters"})
 		return
 	}
 
-	pagination := &pkg.Pagination{
-		Limit: limit,
-		Page:  page,
-	}
 	// Call the service to list paginateUsers with pagination
-	paginateUsers, err := s.Services.UserService.ListUsers(*pagination)
+	paginateUsers, err := s.Services.UserService.ListUsers(pagination)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve users"})
 		return

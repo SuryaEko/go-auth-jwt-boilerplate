@@ -1,9 +1,9 @@
 package pkg
 
 type Pagination struct {
-	Limit      int         `json:"limit,omitempty;query:limit"`
-	Page       int         `json:"page,omitempty;query:page"`
-	Sort       string      `json:"sort,omitempty;query:sort"`
+	Limit      int         `json:"limit,omitempty" form:"limit"`
+	Page       int         `json:"page,omitempty" form:"page"`
+	Sort       string      `json:"sort,omitempty" form:"sort"`
 	TotalRows  int64       `json:"total_rows"`
 	TotalPages int         `json:"total_pages"`
 	Rows       interface{} `json:"rows"`
