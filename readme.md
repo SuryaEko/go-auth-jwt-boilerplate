@@ -85,5 +85,8 @@ The app will run at `http://localhost:8080`
 - [godotenv](https://github.com/joho/godotenv) — Load env file
 - [crypto/bcrypt](https://pkg.go.dev/golang.org/x/crypto/bcrypt) — Password hashing
 
+## Articles
+- [Gorm Pagination](https://dev.to/rafaelgfirmino/pagination-using-gorm-scopes-3k5f) - How to implement pagination using GORM scopes
+
 ## License
 MIT

@@ -5,12 +5,19 @@ import (
 
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/dto"
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/models"
+	"github.com/SuryaEko/go-auth-jwt-boilerplate/pkg"
 	"github.com/SuryaEko/go-auth-jwt-boilerplate/utils"
 	"gorm.io/gorm"
 )
 
 type UserService struct {
 	DB *gorm.DB
+}
+
+func (s *UserService) ListUsers(input pkg.Pagination) (*pkg.Pagination, error) {
+	userGorm := &models.UserGorm{DB: s.DB}
+
+	return userGorm.List(input)
 }
 
 // CreateUser creates a new user in the database
