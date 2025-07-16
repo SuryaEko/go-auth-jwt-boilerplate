@@ -11,10 +11,7 @@ import (
 
 func (s *ControllerService) ListUsers(c *gin.Context) {
 	var pagination pkg.Pagination
-	if err := c.ShouldBindQuery(&pagination); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid pagination parameters"})
-		return
-	}
+	c.ShouldBindQuery(&pagination)
 
 	// Call the service to list paginateUsers with pagination
 	paginateUsers, err := s.Services.UserService.ListUsers(pagination)

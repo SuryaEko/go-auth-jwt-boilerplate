@@ -12,6 +12,7 @@ A clean and modular boilerplate for building RESTful APIs in Go using Gin, GORM,
 - Dependency Injection ready (service container)
 - Auto-migration for database tables
 - Example for profile update and password change
+- Integration tests
 
 ## Project Structure
 ```
@@ -19,6 +20,7 @@ go-auth-jwt-boilerplate/
 ├── main.go                # Application entry point
 ├── go.mod / go.sum        # Go modules
 ├── .env.example           # Environment variables (example)
+├── .env.test.example      # Environment variables for integration test (example)
 │
 ├── database/              # DB connection & auto migration
 ├── models/                # GORM models (User, etc)
@@ -28,6 +30,7 @@ go-auth-jwt-boilerplate/
 ├── routes/                # Route registration
 ├── middleware/            # JWT & custom middleware
 ├── utils/                 # Helper functions (JWT, bcrypt, etc)
+├── tests/                 # Integration tests
 ```
 
 ## Getting Started
@@ -44,7 +47,12 @@ Copy `.env.example` to `.env` and fill in your configuration:
 cp .env.example .env
 ```
 
-Edit `.env` as needed:
+For integration tests, copy `.env.test.example` to `.env.test`:
+```sh
+cp .env.test.example .env.test
+```
+
+Edit `.env` and `.env.test` as needed:
 ```
 DB_HOST=localhost
 DB_USER=postgres
@@ -66,6 +74,12 @@ go run main.go
 ```
 
 The app will run at `http://localhost:8080`
+
+### 5. Run tests
+To run integration tests (if placed in `tests/` folder):
+```sh
+go test ./tests
+```
 
 ## API Endpoints (example)
 - `POST /register` — Register a new user

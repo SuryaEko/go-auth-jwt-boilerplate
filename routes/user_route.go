@@ -10,7 +10,7 @@ import (
 func UserRoutes(router *gin.Engine, cs *controllers.ControllerService) {
 	userRouter := router.Group("/users")
 
-	userRouter.GET("/", middleware.AuthMiddleware(), cs.ListUsers)
+	userRouter.GET("", middleware.AuthMiddleware(), cs.ListUsers)
 	userRouter.POST("/", cs.CreateUser)
 	userRouter.GET("/:id", middleware.AuthMiddleware(), cs.GetUserByID)
 	userRouter.PUT("/:id", middleware.AuthMiddleware(), cs.UpdateUser)
